@@ -1,0 +1,23 @@
+title: DNS Query To Put.io
+id: 37563bef-6951-4912-8516-308b0dffd3c3
+status: experimental
+description: Detects DNS queries for subdomains related to Put.io sharing website
+references:
+    - Internal Case
+author: Omar Khaled (beacon_exe)
+date: 2024/02/28
+logsource:
+    product: windows
+    service: dns-client
+    definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event Log must be enabled/collected in order to receive the events.'
+detection:
+    selection:
+        EventID: 3008
+        QueryName|contains:
+            - 'api.put.io'
+            - 'upload.put.io'
+            - 's111.put.io'
+    condition: selection
+falsepositives:
+    - Legitimate DNS queries and usage of Put.io
+level: medium
